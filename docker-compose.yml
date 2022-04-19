@@ -1,0 +1,13 @@
+version: "3"
+services:
+
+  authuser-db:
+    image: postgres:11
+    container_name: authuser-db
+    restart: always
+    environment:
+      - POSTGRES_DB=authuser-db
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    ports:
+      - 5434:5432
