@@ -12,8 +12,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Data
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
 @Entity
 @Table(name = "TB_USERS")
 public class UserModel implements Serializable {
