@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
@@ -23,7 +25,7 @@ public class AuthenticationController {
     private UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<Object> registerUser(@RequestBody UserDto dto){
+    public ResponseEntity<Object> registerUser(@RequestBody @JsonView(UserDto.UserView.RegistrationPost.class) UserDto dto){
 
         if(userService.existsByUserName(dto.getUserName())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: UserName is Already Taken!");

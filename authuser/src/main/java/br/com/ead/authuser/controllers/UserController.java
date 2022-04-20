@@ -46,4 +46,16 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body("User deleted sucess.");
         }
     }
+    
+    @PutMapping("/{userId}")
+    public ResponseEntity<Object> UpdateUser(@PathVariable(value = "userId") UUID userId){
+        Optional<UserModel> userModelOptional = userService.findById(userId);
+        if(!userModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User Not found");
+        }else {
+            userService.delete(userModelOptional.get());
+            return ResponseEntity.status(HttpStatus.OK).body("User deleted sucess.");
+        }
+    }
+    
 }
