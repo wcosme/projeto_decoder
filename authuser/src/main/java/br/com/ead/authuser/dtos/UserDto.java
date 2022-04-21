@@ -9,6 +9,7 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
 
+import br.com.ead.authuser.validation.UserNameConstraint;
 import lombok.Data;
 
 @Data
@@ -25,23 +26,24 @@ public class UserDto {
     private UUID userId;
     
     @NotBlank(groups = UserView.RegistrationPost.class)
-    @Size(min = 5, max = 50)
+    @Size(min = 5, max = 50, groups = UserView.RegistrationPost.class)
+    @UserNameConstraint(groups = UserView.RegistrationPost.class)
     @JsonView(UserView.RegistrationPost.class)    
     private String userName;
     
     @NotBlank(groups = UserView.RegistrationPost.class)
     @Size(min = 5, max = 50)
-    @Email
+    @Email(groups = UserView.RegistrationPost.class)
     @JsonView(UserView.RegistrationPost.class)
     private String email;
     
     @NotBlank(groups = {UserView.RegistrationPost.class, UserView.PasswordPut.class})
-    @Size(min = 6, max = 10)
+    @Size(min = 6, max = 10, groups = {UserView.RegistrationPost.class, UserView.PasswordPut.class})
     @JsonView({UserView.RegistrationPost.class, UserView.PasswordPut.class})
     private String password;
     
     @NotBlank(groups = UserView.PasswordPut.class)
-    @Size(min = 6, max = 10)
+    @Size(min = 6, max = 10, groups = UserView.PasswordPut.class)
     @JsonView(UserView.PasswordPut.class)
     private String oldPassword;
     
