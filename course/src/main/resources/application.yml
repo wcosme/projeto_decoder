@@ -1,11 +1,11 @@
 server:
-  port: ${PORT:8088}
+  port: ${PORT:8082}
 
 spring:
   application:
     name: Course-api
   datasource:
-    url: jdbc:postgresql://localhost:5434/authuser-db
+    url: jdbc:postgresql://localhost:5434/ead-course
     username: root
     password: root
 

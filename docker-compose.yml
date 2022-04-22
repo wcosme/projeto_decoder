@@ -3,11 +3,33 @@ services:
 
   authuser-db:
     image: postgres:11
-    container_name: authuser-db
+    container_name: ead-authuser
     restart: always
     environment:
-      - POSTGRES_DB=authuser-db
+      - POSTGRES_DB=ead-authuser
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
     ports:
       - 5434:5432
+      
+  course-db:
+    image: postgres:11
+    container_name: ead-course
+    restart: always
+    environment:
+      - POSTGRES_DB=ead-course
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    ports:
+      - 5435:5432
+      
+  notification-db:
+    image: postgres:11
+    container_name: ead-notification
+    restart: always
+    environment:
+      - POSTGRES_DB=ead-notification
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    ports:
+      - 5436:5432
