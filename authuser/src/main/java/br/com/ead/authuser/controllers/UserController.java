@@ -28,6 +28,9 @@ import br.com.ead.authuser.filters.FilterTemplate;
 import br.com.ead.authuser.models.UserModel;
 import br.com.ead.authuser.services.UserService;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @RestController
 @RequestMapping("/users")
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -42,8 +45,14 @@ public class UserController {
     @GetMapping
     public ResponseEntity<Page<UserModel>> getAllUsers(FilterTemplate.UserFilter filter,
     													@PageableDefault(page = 0, size = 10, sort = "userId", direction = Direction.ASC) Pageable pageable){
-    	
+    	    	    	
     	Page<UserModel> userPage = userService.findAll(filter, pageable);
+    	
+    	if(!userPage.isEmpty()) {
+    		for (UserModel user : userPage.toList()) {
+				user.add(linkTo(methodOn(UserController.class).getUser(user.getUserId())).withSelfRel());
+			}
+    	}
     	
         return ResponseEntity.status(HttpStatus.OK).body(userPage);
     }
