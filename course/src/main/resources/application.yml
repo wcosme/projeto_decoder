@@ -5,7 +5,7 @@ spring:
   application:
     name: Course-api
   datasource:
-    url: jdbc:postgresql://localhost:5434/ead-course
+    url: jdbc:postgresql://localhost:5435/ead-course
     username: root
     password: root
 
