@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import br.com.ead.authuser.dtos.UserDto;
+import br.com.ead.authuser.filters.FilterTemplate;
 import br.com.ead.authuser.models.UserModel;
 import br.com.ead.authuser.services.UserService;
 
@@ -39,9 +40,10 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<UserModel>> getAllUsers(@PageableDefault(page = 0, size = 10, sort = "userId", direction = Direction.ASC) Pageable pageable){
+    public ResponseEntity<Page<UserModel>> getAllUsers(FilterTemplate.UserFilter filter,
+    													@PageableDefault(page = 0, size = 10, sort = "userId", direction = Direction.ASC) Pageable pageable){
     	
-    	Page<UserModel> userPage = userService.findAll(pageable);
+    	Page<UserModel> userPage = userService.findAll(filter, pageable);
     	
         return ResponseEntity.status(HttpStatus.OK).body(userPage);
     }
