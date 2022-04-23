@@ -2,6 +2,7 @@ package br.com.ead.course.models;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -11,10 +12,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import br.com.ead.course.enuns.CourseLevel;
 import br.com.ead.course.enuns.CourseStatus;
@@ -59,6 +63,10 @@ public class Course implements Serializable{
 	
 	@Column(nullable = false)
 	private UUID userInstructor;
+	
+	@JsonProperty(access = Access.WRITE_ONLY)
+	@OneToMany(mappedBy = "course")
+	private Set<Module> modules;
 	
 
 }
