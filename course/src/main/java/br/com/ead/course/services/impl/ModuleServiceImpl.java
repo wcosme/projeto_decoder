@@ -1,6 +1,8 @@
 package br.com.ead.course.services.impl;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,5 +29,15 @@ public class ModuleServiceImpl implements ModuleService {
 			lessonRepository.deleteAll(lessons);
 		}
 		moduleRepository.delete(module);
+	}
+
+	@Override
+	public List<Module> findAll() {		
+		return moduleRepository.findAll();
+	}
+
+	@Override
+	public Optional<Module> findById(UUID moduleId) {		
+		return moduleRepository.findById(moduleId);
 	}
 }
