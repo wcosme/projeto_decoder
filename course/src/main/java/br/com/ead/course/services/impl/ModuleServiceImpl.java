@@ -40,4 +40,9 @@ public class ModuleServiceImpl implements ModuleService {
 	public Optional<Module> findById(UUID moduleId) {		
 		return moduleRepository.findById(moduleId);
 	}
+
+	@Override
+	public Module save(Module module) {
+		return moduleRepository.save(module);
+	}
 }

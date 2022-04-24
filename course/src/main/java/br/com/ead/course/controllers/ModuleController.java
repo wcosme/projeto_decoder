@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.ead.course.dtos.moduleDto;
 import br.com.ead.course.models.Module;
 import br.com.ead.course.services.ModuleService;
 
@@ -57,7 +58,6 @@ public class ModuleController {
 
 		BeanUtils.copyProperties(moduleDto, module);
 		module.setCreationDate(LocalDateTime.now(ZoneId.of("UTC")));
-		module.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(moduleService.save(module));
 	}
@@ -83,14 +83,7 @@ public class ModuleController {
 		if (!moduleOptional.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("module not found.");
 		} else {
-			var module = moduleOptional.get();
-			module.setName(moduleDto.getName());
-			module.setDescription(moduleDto.getDescription());
-			module.setImageUrl(moduleDto.getImageUrl());
-			module.setmoduleStatus(moduleDto.getmoduleStatus());
-			module.setmoduleLevel(moduleDto.getmoduleLevel());
-			module.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));			
-			
+			var module = moduleOptional.get();			
 			return ResponseEntity.status(HttpStatus.OK).body(moduleService.save(module));
 		}
 	}
