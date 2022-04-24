@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ead.course.dtos.moduleDto;
+import br.com.ead.course.dtos.ModuleDto;
 import br.com.ead.course.models.Course;
 import br.com.ead.course.models.Module;
 import br.com.ead.course.services.CourseService;
@@ -55,7 +55,7 @@ public class ModuleController {
 	}
 
 	@PostMapping("/courses/{courseId}/modules")
-	public ResponseEntity<Object> saveModule(@PathVariable(value = "courseId") UUID courseId, @RequestBody @Valid moduleDto moduleDto) {
+	public ResponseEntity<Object> saveModule(@PathVariable(value = "courseId") UUID courseId, @RequestBody @Valid ModuleDto moduleDto) {
 		
 		Optional<Course> courseOptional = courseService.findById(courseId);
 
@@ -86,7 +86,7 @@ public class ModuleController {
 	}
 
 	@PutMapping("/courses/{courseId}/modules/{moduleId}")
-	public ResponseEntity<Object> updateModule(@RequestBody @Valid moduleDto moduleDto, 
+	public ResponseEntity<Object> updateModule(@RequestBody @Valid ModuleDto moduleDto, 
 												@PathVariable(value = "courseId") UUID courseId, 
 												@PathVariable(value = "moduleId") UUID moduleId) {
 		
