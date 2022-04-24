@@ -1,6 +1,8 @@
 package br.com.ead.course.services.impl;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -43,5 +45,21 @@ public class CourseServiceImpl implements CourseService {
 			moduleRepository.deleteAll(modules);
 		}
 		courseRepository.delete(course);
+	}
+
+	@Override
+	public Course save(Course course) {
+		return courseRepository.save(course);
+		
+	}
+
+	@Override
+	public Optional<Course> findById(UUID courseId) {		
+		return courseRepository.findById(courseId);
+	}
+
+	@Override
+	public List<Course> findAll() {		
+		return courseRepository.findAll();
 	}
 }
