@@ -33,13 +33,25 @@ public class FilterTemplate {
 	@Spec(path = "title", spec = LikeIgnoreCase.class)	
 	public interface LessonFilter extends Specification<Lesson>{}
 	
+		
     public static Specification<Module> moduleCourseId(final UUID courseId) {
         return (root, query, cb) -> {
             query.distinct(true);
             Root<Module> module = root;
             Root<Course> course = query.from(Course.class);
-            Expression<Collection<Module>> coursesModules = course.get("modules");
-            return cb.and(cb.equal(course.get("courseId"), courseId), cb.isMember(module, coursesModules));
+            Expression<Collection<Module>> courseModules = course.get("modules");
+            return cb.and(cb.equal(course.get("courseId"), courseId), cb.isMember(module, courseModules));
+        };
+    }
+    
+    
+    public static Specification<Lesson> lessonModuleId(final UUID moduleId) {
+        return (root, query, cb) -> {
+            query.distinct(true);
+            Root<Lesson> lesson = root;
+            Root<Module> module = query.from(Module.class);
+            Expression<Collection<Lesson>> moduleLessons = module.get("lessons");
+            return cb.and(cb.equal(module.get("moduleId"), moduleId), cb.isMember(lesson, moduleLessons));
         };
     }
 }
