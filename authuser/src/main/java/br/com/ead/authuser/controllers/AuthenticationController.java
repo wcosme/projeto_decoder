@@ -5,6 +5,9 @@ import br.com.ead.authuser.enums.UserStatus;
 import br.com.ead.authuser.enums.UserType;
 import br.com.ead.authuser.models.UserModel;
 import br.com.ead.authuser.services.UserService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +24,8 @@ import java.time.ZoneId;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/auth")
 public class AuthenticationController {
+	
+	Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 
     @Autowired
     private UserService userService;
@@ -29,7 +34,8 @@ public class AuthenticationController {
     public ResponseEntity<Object> registerUser(@RequestBody @Validated(UserDto.UserView.RegistrationPost.class)
     										   @JsonView(UserDto.UserView.RegistrationPost.class) UserDto dto){
 
-        if(userService.existsByUserName(dto.getUserName())){
+    	logger.info("Validando se o usuário passado existe");
+        if(userService.existsByUserName(dto.getUserName())){        	
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: UserName is Already Taken!");
         }
         if(userService.existsByEmail(dto.getEmail())){

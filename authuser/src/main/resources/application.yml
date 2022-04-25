@@ -19,3 +19,10 @@ spring:
     properties:
       hibernate:
         show_sql: true
+        
+logging:
+  level:
+    '[br.com.ead.authuser]': trace
+    root: info
+    '[org.springframework.web]': debug
+    '[org.hibernate]': info
