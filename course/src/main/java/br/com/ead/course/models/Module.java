@@ -43,7 +43,7 @@ public class Module implements Serializable {
 	@Column(nullable = false, length = 250)
 	private String description;
 		
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
 	@Column(nullable = false)
 	private LocalDateTime creationDate;
 	
