@@ -2,7 +2,6 @@ package br.com.ead.course.controllers;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -10,6 +9,10 @@ import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ead.course.dtos.ModuleDto;
+import br.com.ead.course.filters.FilterTemplate;
 import br.com.ead.course.models.Course;
 import br.com.ead.course.models.Module;
 import br.com.ead.course.services.CourseService;
@@ -38,8 +42,10 @@ public class ModuleController {
 	private CourseService courseService;
 	
 	@GetMapping("/courses/{courseId}/modules")
-	public ResponseEntity<List<Module>> getAllModules(@PathVariable(value = "courseId") UUID courseId){
-		return ResponseEntity.status(HttpStatus.OK).body(moduleService.findAllByCourse(courseId));		
+	public ResponseEntity<Page<Module>> getAllModules(@PathVariable(value = "courseId") UUID courseId, FilterTemplate.ModuleFilter filter,
+			                                          @PageableDefault(page = 0, size = 10, sort = "moduleId", direction = Direction.ASC) Pageable pageable){
+		
+		return ResponseEntity.status(HttpStatus.OK).body(moduleService.findAllByCourse(FilterTemplate.moduleCourseId(courseId).and(filter), pageable));		
 	}
 	
 	@GetMapping("/courses/{courseId}/modules/{moduleId}")
