@@ -10,15 +10,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import br.com.ead.course.models.Lesson;
+import br.com.ead.course.models.LessonModel;
 
 @Repository
-public interface LessonRepository extends JpaRepository<Lesson, UUID>, JpaSpecificationExecutor<Lesson> {
+public interface LessonRepository extends JpaRepository<LessonModel, UUID>, JpaSpecificationExecutor<LessonModel> {
 	
 	@Query(value = "select * from tb_lessons where module_module_id = :moduleId", nativeQuery = true)
-	List<Lesson> findAllLessonsIntoModule(@Param("moduleId") UUID moduleId);
+	List<LessonModel> findAllLessonsIntoModule(@Param("moduleId") UUID moduleId);
 
 	@Query(value = "select * from tb_lessons where module_module_id = :moduleId and lesson_id = :lessonId", nativeQuery = true)
-	Optional<Lesson> findLessonIntoModule(UUID moduleId, UUID lessonId);
+	Optional<LessonModel> findLessonIntoModule(UUID moduleId, UUID lessonId);
 
 }

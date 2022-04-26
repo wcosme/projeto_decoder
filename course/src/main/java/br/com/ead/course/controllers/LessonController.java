@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ead.course.dtos.LessonDto;
 import br.com.ead.course.filters.FilterTemplate;
-import br.com.ead.course.models.Lesson;
-import br.com.ead.course.models.Module;
+import br.com.ead.course.models.LessonModel;
+import br.com.ead.course.models.ModuleModel;
 import br.com.ead.course.services.LessonService;
 import br.com.ead.course.services.ModuleService;
 
@@ -46,12 +46,12 @@ public class LessonController {
 	public ResponseEntity<Object> saveLesson(@PathVariable(value = "moduleId") UUID moduleId,
 			@RequestBody @Valid LessonDto lessonDto) {
 
-		Optional<Module> moduleOptional = moduleService.findById(moduleId);
+		Optional<ModuleModel> moduleOptional = moduleService.findById(moduleId);
 
 		if (!moduleOptional.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Module not found.");
 		} else {
-			var lesson = new Lesson();
+			var lesson = new LessonModel();
 
 			BeanUtils.copyProperties(lessonDto, lesson);
 			lesson.setCreationDate(LocalDateTime.now(ZoneId.of("UTC")));			
@@ -64,7 +64,7 @@ public class LessonController {
 	@DeleteMapping("/modules/{moduleId}/lessons/{lessonId}")
 	public ResponseEntity<Object> deleteLesson(@PathVariable(value = "moduleId") UUID moduleId, @PathVariable(value = "lessonId") UUID lessonId) {
 
-		Optional<Lesson> lessonOptional = lessonService.findLessonIntoModule(moduleId, lessonId);
+		Optional<LessonModel> lessonOptional = lessonService.findLessonIntoModule(moduleId, lessonId);
 
 		if (!lessonOptional.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lesson not found for this module.");
@@ -79,7 +79,7 @@ public class LessonController {
 												@PathVariable(value = "moduleId") UUID moduleId, 
 												@PathVariable(value = "lessonId") UUID lessonId) {
 
-		Optional<Lesson> lessonOptional = lessonService.findLessonIntoModule(moduleId, lessonId);
+		Optional<LessonModel> lessonOptional = lessonService.findLessonIntoModule(moduleId, lessonId);
 
 		if (!lessonOptional.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lesson not found for this module.");
@@ -94,7 +94,7 @@ public class LessonController {
 	}
 	
 	@GetMapping("/modules/{moduleId}/lessons")
-	public ResponseEntity<Page<Lesson>> getAllLessons(@PathVariable(value = "moduleId") UUID moduleId, FilterTemplate.LessonFilter filter,
+	public ResponseEntity<Page<LessonModel>> getAllLessons(@PathVariable(value = "moduleId") UUID moduleId, FilterTemplate.LessonFilter filter,
             										  @PageableDefault(page = 0, size = 10, sort = "lessonId", direction = Direction.ASC) Pageable pageable) {
 		
 		return ResponseEntity.status(HttpStatus.OK).body(lessonService.findAllByModule(FilterTemplate.lessonModuleId(moduleId).and(filter), pageable));
@@ -104,7 +104,7 @@ public class LessonController {
 	public ResponseEntity<Object> getOneLesson(@PathVariable(value = "moduleId") UUID moduleId,
 											   @PathVariable(value = "lessonId") UUID lessonId) {
 
-		Optional<Lesson> lessonOptional = lessonService.findLessonIntoModule(moduleId, lessonId);
+		Optional<LessonModel> lessonOptional = lessonService.findLessonIntoModule(moduleId, lessonId);
 
 		if (!lessonOptional.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lesson not found.");

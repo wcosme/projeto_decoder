@@ -10,8 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import br.com.ead.course.models.Lesson;
-import br.com.ead.course.models.Module;
+import br.com.ead.course.models.LessonModel;
+import br.com.ead.course.models.ModuleModel;
 import br.com.ead.course.repositories.LessonRepository;
 import br.com.ead.course.repositories.ModuleRepository;
 import br.com.ead.course.services.ModuleService;
@@ -26,8 +26,8 @@ public class ModuleServiceImpl implements ModuleService {
 	private LessonRepository lessonRepository;
 
 	@Override
-	public void delete(Module module) {
-		List<Lesson> lessons = lessonRepository.findAllLessonsIntoModule(module.getModuleId());
+	public void delete(ModuleModel module) {
+		List<LessonModel> lessons = lessonRepository.findAllLessonsIntoModule(module.getModuleId());
 		if(!lessons.isEmpty()) {
 			lessonRepository.deleteAll(lessons);
 		}
@@ -35,32 +35,32 @@ public class ModuleServiceImpl implements ModuleService {
 	}
 
 	@Override
-	public List<Module> findAll() {		
+	public List<ModuleModel> findAll() {		
 		return moduleRepository.findAll();
 	}
 
 	@Override
-	public Optional<Module> findById(UUID moduleId) {		
+	public Optional<ModuleModel> findById(UUID moduleId) {		
 		return moduleRepository.findById(moduleId);
 	}
 
 	@Override
-	public Module save(Module module) {
+	public ModuleModel save(ModuleModel module) {
 		return moduleRepository.save(module);
 	}
 
 	@Override
-	public Optional<Module> findModuleIntoCourse(UUID courseId, UUID moduleId) {		
+	public Optional<ModuleModel> findModuleIntoCourse(UUID courseId, UUID moduleId) {		
 		return moduleRepository.findModuleIntoCourse(courseId, moduleId);
 	}
 
 	@Override
-	public List<Module> findAllByCourse(UUID courseId) {
+	public List<ModuleModel> findAllByCourse(UUID courseId) {
 		return moduleRepository.findAllModulesIntoCourse(courseId);
 	}
 
 	@Override
-	public Page<Module> findAllByCourse(Specification<Module> filter, Pageable pageable) {
+	public Page<ModuleModel> findAllByCourse(Specification<ModuleModel> filter, Pageable pageable) {
 		return moduleRepository.findAll(filter, pageable);
 	}
 }

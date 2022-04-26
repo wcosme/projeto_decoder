@@ -12,9 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import br.com.ead.course.models.Course;
-import br.com.ead.course.models.Lesson;
-import br.com.ead.course.models.Module;
+import br.com.ead.course.models.CourseModel;
+import br.com.ead.course.models.LessonModel;
+import br.com.ead.course.models.ModuleModel;
 import br.com.ead.course.repositories.CourseRepository;
 import br.com.ead.course.repositories.LessonRepository;
 import br.com.ead.course.repositories.ModuleRepository;
@@ -34,13 +34,13 @@ public class CourseServiceImpl implements CourseService {
 
 	@Transactional
 	@Override
-	public void delete(Course course) {
+	public void delete(CourseModel course) {
 		
-		List<Module> modules = moduleRepository.findAllModulesIntoCourse(course.getCourseId());
+		List<ModuleModel> modules = moduleRepository.findAllModulesIntoCourse(course.getCourseId());
 		
 		if(!modules.isEmpty()) {
-			for (Module module : modules) {
-				List<Lesson> lessons = lessonRepository.findAllLessonsIntoModule(module.getModuleId());
+			for (ModuleModel module : modules) {
+				List<LessonModel> lessons = lessonRepository.findAllLessonsIntoModule(module.getModuleId());
 				if(!lessons.isEmpty()) {
 					lessonRepository.deleteAll(lessons);
 				}
@@ -51,18 +51,18 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public Course save(Course course) {
+	public CourseModel save(CourseModel course) {
 		return courseRepository.save(course);
 		
 	}
 
 	@Override
-	public Optional<Course> findById(UUID courseId) {		
+	public Optional<CourseModel> findById(UUID courseId) {		
 		return courseRepository.findById(courseId);
 	}
 
 	@Override
-	public Page<Course> findAll(Specification<Course> filter, Pageable pageable) {		
+	public Page<CourseModel> findAll(Specification<CourseModel> filter, Pageable pageable) {		
 		return courseRepository.findAll(filter, pageable);
 	}
 }

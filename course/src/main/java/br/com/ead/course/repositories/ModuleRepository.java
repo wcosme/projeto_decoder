@@ -11,18 +11,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import br.com.ead.course.models.Module;
+import br.com.ead.course.models.ModuleModel;
 
 @Repository
-public interface ModuleRepository extends JpaRepository<Module, UUID>, JpaSpecificationExecutor<Module> {
+public interface ModuleRepository extends JpaRepository<ModuleModel, UUID>, JpaSpecificationExecutor<ModuleModel> {
 	
 	@EntityGraph(attributePaths = {"course"})
-	Module findByTitle(String title);
+	ModuleModel findByTitle(String title);
 	
 	@Query(value = "select * from tb_modules where course_course_id = :courseId", nativeQuery = true)
-	List<Module> findAllModulesIntoCourse(@Param("courseId") UUID courseId);
+	List<ModuleModel> findAllModulesIntoCourse(@Param("courseId") UUID courseId);
 	
 	@Query(value = "select * from tb_modules where course_course_id = :courseId and module_Id = :moduleId", nativeQuery = true)
-	Optional<Module> findModuleIntoCourse(@Param("courseId") UUID courseId, @Param("moduleId")UUID moduleId);
+	Optional<ModuleModel> findModuleIntoCourse(@Param("courseId") UUID courseId, @Param("moduleId")UUID moduleId);
 
 }

@@ -8,14 +8,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
-import br.com.ead.course.models.Lesson;
+import br.com.ead.course.models.LessonModel;
 
 public interface LessonService {
 
-	Lesson save(Lesson lesson);
-	Optional<Lesson> findLessonIntoModule(UUID moduleId, UUID lessonId);
-	void delete(Lesson lesson);
-	List<Lesson> findAllByModule(UUID moduleId);
-	Page<Lesson> findAllByModule(Specification<Lesson> filter, Pageable pageable);
+	LessonModel save(LessonModel lesson);
+	Optional<LessonModel> findLessonIntoModule(UUID moduleId, UUID lessonId);
+	void delete(LessonModel lesson);
+	List<LessonModel> findAllByModule(UUID moduleId);
+	Page<LessonModel> findAllByModule(Specification<LessonModel> filter, Pageable pageable);
 
 }

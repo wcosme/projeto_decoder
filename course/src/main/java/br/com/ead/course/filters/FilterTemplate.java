@@ -6,9 +6,9 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import br.com.ead.course.models.Course;
-import br.com.ead.course.models.Lesson;
-import br.com.ead.course.models.Module;
+import br.com.ead.course.models.CourseModel;
+import br.com.ead.course.models.LessonModel;
+import br.com.ead.course.models.ModuleModel;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
@@ -18,30 +18,30 @@ public class FilterTemplate {
 
 	@And({ @Spec(path = "courseStatus", spec = Equal.class), @Spec(path = "courseLevel", spec = Equal.class),
 			@Spec(path = "name", spec = LikeIgnoreCase.class) })
-	public interface CourseFilter extends Specification<Course> {
+	public interface CourseFilter extends Specification<CourseModel> {
 	}
 
 	@Spec(path = "title", spec = LikeIgnoreCase.class)
-	public interface ModuleFilter extends Specification<Module> {
+	public interface ModuleFilter extends Specification<ModuleModel> {
 	}
 
 	@Spec(path = "title", spec = LikeIgnoreCase.class)
-	public interface LessonFilter extends Specification<Lesson> {
+	public interface LessonFilter extends Specification<LessonModel> {
 	}
 
-	public static Specification<Module> moduleCourseId(final UUID courseId) {
+	public static Specification<ModuleModel> moduleCourseId(final UUID courseId) {
 		return (root, query, cb) -> {
 			query.distinct(true);
-			Root<Module> module = root;			
+			Root<ModuleModel> module = root;			
 			return cb.and(cb.equal(module.get("course").get("courseId"), courseId));
 		};
 	}
 
 	
-	public static Specification<Lesson> lessonModuleId(final UUID moduleId) {
+	public static Specification<LessonModel> lessonModuleId(final UUID moduleId) {
     	return (root, query, cb) -> {
     		query.distinct(true);
-    		Root<Lesson> lesson = root;
+    		Root<LessonModel> lesson = root;
     		return cb.and(cb.equal(lesson.get("module").get("moduleId"), moduleId));
     	};
 	}

@@ -32,7 +32,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "TB_COURSES")
-public class Course implements Serializable{
+public class CourseModel implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -71,7 +71,9 @@ public class Course implements Serializable{
 	@JsonProperty(access = Access.WRITE_ONLY)
 	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
 	@Fetch(FetchMode.SUBSELECT)
-	private Set<Module> modules;
+	private Set<ModuleModel> modules;
 	
+	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+	private Set<CourseUserModel> userModels;	
 
 }

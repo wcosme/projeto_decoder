@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ead.course.dtos.CourseDto;
 import br.com.ead.course.filters.FilterTemplate;
-import br.com.ead.course.models.Course;
+import br.com.ead.course.models.CourseModel;
 import br.com.ead.course.services.CourseService;
 
 @RestController
@@ -39,7 +39,7 @@ public class CourseController {
 	private CourseService courseService;
 
 	@GetMapping
-	public ResponseEntity<Page<Course>> getAllCourses(FilterTemplate.CourseFilter filter,
+	public ResponseEntity<Page<CourseModel>> getAllCourses(FilterTemplate.CourseFilter filter,
 			@PageableDefault(page = 0, size = 10, sort = "courseId", direction = Direction.ASC) Pageable pageable) {
 		
 		return ResponseEntity.status(HttpStatus.OK).body(courseService.findAll(filter, pageable));
@@ -48,7 +48,7 @@ public class CourseController {
 	@GetMapping("/{courseId}")
 	public ResponseEntity<Object> getOneCourse(@PathVariable(value = "courseId") UUID courseId) {
 
-		Optional<Course> courseOptional = courseService.findById(courseId);
+		Optional<CourseModel> courseOptional = courseService.findById(courseId);
 
 		if (!courseOptional.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found.");
@@ -58,9 +58,9 @@ public class CourseController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Course> saveCourse(@RequestBody @Valid CourseDto courseDto) {
+	public ResponseEntity<CourseModel> saveCourse(@RequestBody @Valid CourseDto courseDto) {
 
-		var course = new Course();
+		var course = new CourseModel();
 
 		BeanUtils.copyProperties(courseDto, course);
 		course.setCreationDate(LocalDateTime.now(ZoneId.of("UTC")));
@@ -72,7 +72,7 @@ public class CourseController {
 	@DeleteMapping("/{courseId}")
 	public ResponseEntity<Object> deleteCourse(@PathVariable(value = "courseId") UUID courseId) {
 
-		Optional<Course> courseOptional = courseService.findById(courseId);
+		Optional<CourseModel> courseOptional = courseService.findById(courseId);
 
 		if (!courseOptional.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found.");
@@ -86,7 +86,7 @@ public class CourseController {
 	public ResponseEntity<Object> UpdateCourse(@RequestBody @Valid CourseDto courseDto,
 			@PathVariable(value = "courseId") UUID courseId) {
 
-		Optional<Course> courseOptional = courseService.findById(courseId);
+		Optional<CourseModel> courseOptional = courseService.findById(courseId);
 
 		if (!courseOptional.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found.");

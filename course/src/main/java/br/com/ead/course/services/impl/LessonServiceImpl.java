@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import br.com.ead.course.models.Lesson;
+import br.com.ead.course.models.LessonModel;
 import br.com.ead.course.repositories.LessonRepository;
 import br.com.ead.course.services.LessonService;
 
@@ -21,27 +21,27 @@ public class LessonServiceImpl implements LessonService {
 	private LessonRepository lessonRepository;
 
 	@Override
-	public Lesson save(Lesson lesson) {
+	public LessonModel save(LessonModel lesson) {
 		return lessonRepository.save(lesson);
 	}
 
 	@Override
-	public Optional<Lesson> findLessonIntoModule(UUID moduleId, UUID lessonId) {
+	public Optional<LessonModel> findLessonIntoModule(UUID moduleId, UUID lessonId) {
 		return lessonRepository.findLessonIntoModule(moduleId, lessonId);
 	}
 
 	@Override
-	public void delete(Lesson lesson) {
+	public void delete(LessonModel lesson) {
 		lessonRepository.delete(lesson);		
 	}
 
 	@Override
-	public List<Lesson> findAllByModule(UUID moduleId) {
+	public List<LessonModel> findAllByModule(UUID moduleId) {
 		return lessonRepository.findAllLessonsIntoModule(moduleId);
 	}
 
 	@Override
-	public Page<Lesson> findAllByModule(Specification<Lesson> filter, Pageable pageable) {
+	public Page<LessonModel> findAllByModule(Specification<LessonModel> filter, Pageable pageable) {
 		return lessonRepository.findAll(filter, pageable);
 	}
 
