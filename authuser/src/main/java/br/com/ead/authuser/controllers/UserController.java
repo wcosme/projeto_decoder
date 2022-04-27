@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -44,17 +45,24 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<Page<UserModel>> getAllUsers(FilterTemplate.UserFilter filter,
-    													@PageableDefault(page = 0, size = 10, sort = "userId", direction = Direction.ASC) Pageable pageable){
+    													@PageableDefault(page = 0, size = 10, sort = "userId", direction = Direction.ASC) Pageable pageable,
+    													@RequestParam(required = false) UUID courseId){
     	    	    	
-    	Page<UserModel> userPage = userService.findAll(filter, pageable);
+    	Page<UserModel> userPageModel = null;
     	
-    	if(!userPage.isEmpty()) {
-    		for (UserModel user : userPage.toList()) {
+    	if(courseId != null) {
+    		userPageModel = userService.findAll(FilterTemplate.userCourseId(courseId).and(filter), pageable);
+    	}else {
+    		userPageModel = userService.findAll(filter, pageable);
+		}
+    	
+    	if(!userPageModel.isEmpty()) {
+    		for (UserModel user : userPageModel.toList()) {
 				user.add(linkTo(methodOn(UserController.class).getUser(user.getUserId())).withSelfRel());
 			}
     	}
     	
-        return ResponseEntity.status(HttpStatus.OK).body(userPage);
+        return ResponseEntity.status(HttpStatus.OK).body(userPageModel);
     }
 
     @GetMapping("/{userId}")
