@@ -26,9 +26,7 @@ import br.com.ead.authuser.models.UserCourseModel;
 import br.com.ead.authuser.models.UserModel;
 import br.com.ead.authuser.services.UserCourseService;
 import br.com.ead.authuser.services.UserService;
-import lombok.extern.log4j.Log4j2;
 
-@Log4j2
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class UserCourseController {
@@ -63,5 +61,4 @@ public class UserCourseController {
         UserCourseModel userCourseModel = userCourseService.save(userModelOptional.get().convertToUserCourseModel(userCourseDto.getCourseId()));
         return  ResponseEntity.status(HttpStatus.CREATED).body(userCourseModel);
     }
-
 }

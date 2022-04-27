@@ -1,0 +1,18 @@
+server:
+  port: ${PORT:8761}
+
+spring:
+  application:
+    name: ead-service-registry
+  
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+        
+logging:
+  level:
+    '[br.com.ead.serviceregistry]': trace
+    root: info
+    '[org.springframework.web]': debug
+    '[org.hibernate]': info
