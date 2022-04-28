@@ -16,10 +16,6 @@ spring:
       jdbc:
         lob.non-contextual-creation: true
 
-    properties:
-      hibernate:
-        show_sql: true
-
 logging:
   level:
     '[br.com.ead.course]': trace
@@ -33,3 +29,8 @@ eureka:
       defaultZone: http://localhost:8761/eureka
   instance:
     hostname: localhost
+    
+ead:
+  api:
+    url:
+      authuser: http://ead-authuser-service

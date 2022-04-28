@@ -16,10 +16,6 @@ spring:
       jdbc:
         lob.non-contextual-creation: true
 
-    properties:
-      hibernate:
-        show_sql: true
-
 logging:
   level:
     '[br.com.ead.notification]': trace

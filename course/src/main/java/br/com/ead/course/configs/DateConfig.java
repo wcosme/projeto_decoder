@@ -4,7 +4,6 @@ package br.com.ead.course.configs;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import com.fasterxml.jackson.databind.ObjectMapper;

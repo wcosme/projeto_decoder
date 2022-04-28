@@ -14,10 +14,14 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "TB_COURSES_USERS")
 public class CourseUserModel implements Serializable {
@@ -26,12 +30,10 @@ public class CourseUserModel implements Serializable {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID id;
-	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	private CourseModel course;
-	
-	@Column(nullable = false)
-	private UUID userId;
+    private UUID id;
+    @Column(nullable = false)
+    private UUID userId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private CourseModel course;
 
 }
