@@ -1,15 +1,16 @@
 package br.com.ead.course.services.impl;
 
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import br.com.ead.course.clients.AuthUserClient;
 import br.com.ead.course.models.CourseModel;
 import br.com.ead.course.models.CourseUserModel;
 import br.com.ead.course.repositories.CourseUserRepository;
 import br.com.ead.course.services.CourseUserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
 
 @Service
 public class CourseUserServiceImpl implements CourseUserService {

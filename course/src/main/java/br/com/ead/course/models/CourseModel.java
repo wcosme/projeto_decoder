@@ -28,8 +28,8 @@ import br.com.ead.course.enuns.CourseLevel;
 import br.com.ead.course.enuns.CourseStatus;
 import lombok.Data;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name = "TB_COURSES")
 public class CourseModel implements Serializable{
@@ -73,6 +73,7 @@ public class CourseModel implements Serializable{
 	@Fetch(FetchMode.SUBSELECT)
 	private Set<ModuleModel> modules;
 	
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
 	private Set<CourseUserModel> coursesUsers;
 
